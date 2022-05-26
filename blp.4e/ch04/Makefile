@@ -1,20 +1,20 @@
-# Makefile for Beginning Linux Programming 3rd Edition
-# Chapter 4
 
-ARGS=args argopt longopt
-ENV=environ showenv
-TIME=envtime gmtime ctime strftime
-TMP=tmpnam
-USER=user
-HOST=hostget
-LOG=syslog logmask
-RES=limits
+RM = rm -f
+CC = gcc
+CFLAGS = -Wall -g
+INCLUDES = 
+LDFLAGS = -lm
+LDPATH =
 
-LDFLAGS=-lm
+SOURCES = $(shell ls *.c)
+PROGS = $(subst .c,,$(SOURCES))
+#PROGS = $(SOURCES:%.c=%)
 
-ALL= $(ARGS) $(ENV) $(TIME) $(TMP) $(USER) $(HOST) $(LOG) $(RES)
-
-all: $(ALL)
+all: $(PROGS)
+	@echo "PROGS = $(PROGS)" 
 
 clean:
-	@rm -f $(ALL) *~
+	$(RM) $(PROGS)
+
+%: %.c
+	$(CC) -o $@ $(CFLAGS) $(INCLUDES) $^ $(LDFLAGS) $(LDPATH)
